@@ -1,0 +1,37 @@
+{
+  "name": "solid-trinity",
+  "private": false,
+  "version": "0.0.1",
+  "description": "Trinity, SolidJS-flavored.",
+  "main": "dist/solid-trinity.cjs.js",
+  "module": "dist/solid-trinity.esm.js",
+  "types": "dist/solid-trinity.cjs.d.ts",
+  "typedocMain": "src/index.ts",
+  "license": "MIT",
+  "sideEffects": false,
+  "scripts": {
+    "build": "preconstruct build"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-typescript"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "react": "^18.0.0",
+    "three": "^0.139.2"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "three": ">=0.139.0"
+  }
+}
