@@ -1,7 +1,10 @@
 import { Component, createSignal } from "solid-js"
-import T, { onAnimationFrame, Trinity } from "solid-trinity"
+import T, { onAnimationFrame, ThreeComponent, Trinity } from "solid-trinity"
+import { Mesh } from "three"
 
-const Thingy = () => {
+const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
+  color?: string
+}> = (props) => {
   const [rot, setRot] = createSignal(0)
 
   onAnimationFrame(() => {
@@ -9,9 +12,9 @@ const Thingy = () => {
   })
 
   return (
-    <T.Mesh rotation-z={rot()} scale={1}>
+    <T.Mesh {...props} rotation-z={rot()} scale={1}>
       <T.DodecahedronGeometry />
-      <T.MeshStandardMaterial color="hotpink" />
+      <T.MeshStandardMaterial color={props.color ?? "hotpink"} />
     </T.Mesh>
   )
 }
@@ -20,7 +23,9 @@ const App: Component = () => (
   <Trinity>
     <T.AmbientLight intensity={0.2} />
     <T.DirectionalLight position={[10, 10, 10]} intensity={0.6} />
-    <Thingy />
+
+    <Thingy position-x={-5} color="red" />
+    <Thingy position-x={+5} />
   </Trinity>
 )
 
