@@ -83,8 +83,11 @@ export const makeThreeComponent =
     const [local, instanceProps] = splitProps(props, [
       "ref",
       "args",
+      "attach",
       "children",
     ]);
+
+    const parent = useContext(ParentContext);
 
     /* Create instance */
     const instance = new klass(...(local.args ?? [])) as Instance;
@@ -95,8 +98,10 @@ export const makeThreeComponent =
         ? (props.ref = instance)
         : (props.ref as Function)(instance);
 
+    /* Apply props */
+    applyProps(instance, instanceProps);
+
     /* Connect to parent */
-    const parent = useContext(ParentContext);
     if (
       instance instanceof THREE.Object3D &&
       parent instanceof THREE.Object3D
@@ -106,11 +111,24 @@ export const makeThreeComponent =
     }
 
     /* Attach */
-    if (instance instanceof THREE.Material) parent.material = instance;
-    if (instance instanceof THREE.BufferGeometry) parent.geometry = instance;
+    let attach: string | undefined = local.attach;
+    if (!attach) {
+      if (instance instanceof THREE.Material) attach = "material";
+      else if (instance instanceof THREE.BufferGeometry) attach = "geometry";
+      else if (instance instanceof THREE.Fog) attach = "fog";
+    }
 
-    /* Apply props */
-    applyProps(instance, instanceProps);
+    /* If the instance has an "attach" property, attach it to the parent */
+    if (attach) {
+      if (attach in parent) {
+        parent[attach] = instance;
+        onCleanup(() => void (parent[attach!] = undefined));
+      } else {
+        console.error(
+          `Property "${attach}" does not exist on parent "${parent.constructor.name}"`
+        );
+      }
+    }
 
     /* Automatically dispose */
     if ("dispose" in instance) onCleanup(() => (instance as any).dispose());
