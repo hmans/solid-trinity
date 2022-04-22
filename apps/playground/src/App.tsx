@@ -109,7 +109,7 @@ const App: Component = () => (
     <T.DirectionalLight position={[10, 10, 10]} intensity={0.6} />
 
     <Swarm />
-    <RotatingCube />
+    {/* <RotatingCube /> */}
 
     <Thingy position-x={-5} color="red" />
     <Thingy position-x={+5} />
