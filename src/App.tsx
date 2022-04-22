@@ -42,7 +42,7 @@ const makeThreeComponent =
     const [local, instanceProps] = splitProps(props, ["children"]);
 
     /* Fetch the constructor */
-    const klass = THREE[name];
+    const klass = THREE[name] as ConstructibleTHREE[TName];
 
     /* Create instance */
     const instance = new klass();
