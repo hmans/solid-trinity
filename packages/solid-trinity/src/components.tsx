@@ -14,15 +14,6 @@ type THREE = typeof THREE
 
 export type Constructor<Instance = any> = { new (...args: any[]): Instance }
 
-export type ThreeComponentProps<
-  Klass extends Constructor<any>,
-  Instance = InstanceType<Klass>
-> = MainProps<Instance> &
-  RefProp<Instance> &
-  AttachProp &
-  ConstructorArgsProps<Klass> &
-  ObjectProp<Instance>
-
 type MainProps<T> = Omit<ConvenienceProps<T>, "children" | "attach" | "args">
 
 type ConvenienceProps<T> = {
@@ -67,6 +58,15 @@ type ConstructorArgsProps<TConstructor extends Constructor> = {
   // args?: TConstructor extends new (...args: infer V) => any ? V : never;
   args?: ConstructorParameters<TConstructor>
 }
+
+export type ThreeComponentProps<
+  Klass extends Constructor<any>,
+  Instance = InstanceType<Klass>
+> = MainProps<Instance> &
+  RefProp<Instance> &
+  AttachProp &
+  ConstructorArgsProps<Klass> &
+  ObjectProp<Instance>
 
 export type ThreeComponent<
   Klass extends Constructor,
