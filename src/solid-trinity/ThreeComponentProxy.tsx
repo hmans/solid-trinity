@@ -1,7 +1,8 @@
 import { makeThreeComponent } from "./makeThreeComponent";
+import * as THREE from "three";
 
 export const defaultProxy = {
-  Mesh: makeThreeComponent("Mesh"),
-  MeshStandardMaterial: makeThreeComponent("MeshStandardMaterial"),
-  DodecahedronGeometry: makeThreeComponent("DodecahedronGeometry"),
+  Mesh: makeThreeComponent(THREE.Mesh),
+  MeshStandardMaterial: makeThreeComponent(THREE.MeshStandardMaterial),
+  DodecahedronGeometry: makeThreeComponent(THREE.DodecahedronGeometry),
 };

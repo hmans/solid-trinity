@@ -23,14 +23,11 @@ type ThreeComponentProps<Instance> = any;
 type ThreeComponent<Instance> = Component<ThreeComponentProps<Instance>>;
 
 export const makeThreeComponent =
-  <TName extends keyof ConstructibleTHREE, Klass = ConstructibleTHREE[TName]>(
-    name: TName
-  ): ThreeComponent<Klass> =>
+  <TInstance extends unknown>(
+    klass: Constructor<TInstance>
+  ): ThreeComponent<TInstance> =>
   (props) => {
     const [local, instanceProps] = splitProps(props, ["children"]);
-
-    /* Fetch the constructor */
-    const klass = THREE[name] as ConstructibleTHREE[TName];
 
     /* Create instance */
     const instance = new klass();
