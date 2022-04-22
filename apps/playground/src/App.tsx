@@ -63,14 +63,16 @@ const Swarm = () => {
     )
   }
 
-  onAnimationFrame(() => {
+  const animatePositions = () => {
     for (const [_, setPos] of positions) {
       setPos((pos) => {
         pos.x += 0.01
         return pos
       })
     }
-  })
+  }
+
+  onAnimationFrame(() => batch(animatePositions))
 
   return (
     <>
