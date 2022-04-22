@@ -47,6 +47,21 @@ const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
 
 const Boids = makeInstanceComponents()
 
+const RotatingCube = () => {
+  const [rotation, setRotation] = createSignal(0)
+
+  onAnimationFrame(() => {
+    setRotation((rotation) => rotation + 0.01)
+  })
+
+  return (
+    <T.Mesh rotation={[rotation(), rotation(), 0]}>
+      <T.BoxGeometry />
+      <T.MeshStandardMaterial color="hotpink" />
+    </T.Mesh>
+  )
+}
+
 const Swarm = () => {
   const positions = new Array<Signal<Vector3>>()
 
@@ -94,6 +109,7 @@ const App: Component = () => (
     <T.DirectionalLight position={[10, 10, 10]} intensity={0.6} />
 
     <Swarm />
+    <RotatingCube />
 
     <Thingy position-x={-5} color="red" />
     <Thingy position-x={+5} />
