@@ -48,16 +48,16 @@ const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
 const Boids = makeInstanceComponents()
 
 const Swarm = () => {
-  const positions = new Array<Signal<IVector3>>()
+  const positions = new Array<Signal<Vector3>>()
 
   for (let i = 0; i < 1000; i++) {
     positions.push(
-      createSignal<IVector3>(
-        {
-          x: Math.random() * 50 - 25,
-          y: Math.random() * 50 - 25,
-          z: Math.random() * 50 - 25
-        },
+      createSignal<Vector3>(
+        new Vector3(
+          Math.random() * 50 - 25,
+          Math.random() * 50 - 25,
+          Math.random() * 50 - 25
+        ),
         { equals: false }
       )
     )
@@ -78,7 +78,7 @@ const Swarm = () => {
     <For each={positions}>
       {([pos]) => {
         return (
-          <T.Mesh position={[pos().x, pos().y, pos().z]}>
+          <T.Mesh position={pos()}>
             <T.MeshStandardMaterial color="green" />
             <T.BoxGeometry />
           </T.Mesh>

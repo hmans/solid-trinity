@@ -144,27 +144,23 @@ export const applyProps = (
   props: { [key: string]: any }
 ) => {
   for (const key in props) {
-    const value = props[key]
-
     /* If the key contains a hyphen, we're setting a sub property. */
     if (key.indexOf("-") > -1) {
       const [property, ...rest] = key.split("-")
-      applyProps(object[property], { [rest.join("-")]: value })
-    } else if (object[key]?.setScalar && typeof value === "number") {
-      object[key].setScalar(value)
+      applyProps(object[property], { [rest.join("-")]: props[key] })
+    } else if (object[key]?.setScalar && typeof props[key] === "number") {
+      createEffect(() => object[key].setScalar(props[key]))
     } else if (
       object[key]?.copy &&
-      object[key].constructor === value.constructor
+      object[key].constructor === props[key].constructor
     ) {
-      object[key].copy(value)
+      createEffect(() => object[key].copy(props[key]))
     } else if (object[key]?.set) {
-      createEffect(() => {
-        Array.isArray(props[key])
-          ? object[key].set(...props[key])
-          : object[key].set(props[key])
-      })
+      Array.isArray(props[key])
+        ? createEffect(() => object[key].set(...props[key]))
+        : createEffect(() => object[key].set(props[key]))
     } else if (key in object) {
-      object[key] = value
+      createEffect(() => (object[key] = props[key]))
     }
   }
 }
