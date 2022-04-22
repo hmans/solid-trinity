@@ -1,5 +1,9 @@
 import { Component, createSignal } from "solid-js"
-import T, { onAnimationFrame, ThreeComponent, Trinity } from "solid-trinity"
+import T, {
+  onAnimationFrame,
+  ThreeComponentProps,
+  Trinity
+} from "solid-trinity"
 import { Mesh } from "three"
 
 const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
