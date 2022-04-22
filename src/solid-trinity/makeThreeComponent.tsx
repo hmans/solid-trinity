@@ -66,11 +66,3 @@ export const makeThreeComponent =
       </ParentContext.Provider>
     );
   };
-
-const T = {
-  Mesh: makeThreeComponent("Mesh"),
-  MeshStandardMaterial: makeThreeComponent("MeshStandardMaterial"),
-  DodecahedronGeometry: makeThreeComponent("DodecahedronGeometry"),
-};
-
-export default T;

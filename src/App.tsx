@@ -1,7 +1,6 @@
 import { Component } from "solid-js";
 import * as THREE from "three";
-import { onAnimationFrame } from "./onAnimationFrame";
-import T, { ParentContext } from "./Reactor";
+import T, { onAnimationFrame, ParentContext } from "./solid-trinity";
 
 const ThreeGame: Component = (props) => {
   const renderer = new THREE.WebGLRenderer();
