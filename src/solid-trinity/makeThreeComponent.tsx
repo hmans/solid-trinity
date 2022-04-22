@@ -18,24 +18,37 @@ type ConstructibleTHREE = {
 
 type Constructor<Instance = any> = { new (...args: any[]): Instance };
 
-type ThreeComponentProps<Instance> = any;
+type ThreeComponentProps<
+  Klass extends Constructor,
+  Instance = InstanceType<Klass>
+> = {
+  args?: ConstructorParameters<Klass>;
+  ref?: Instance;
+};
 
-type ThreeComponent<Instance> = Component<ThreeComponentProps<Instance>>;
+type ThreeComponent<
+  Klass extends Constructor,
+  Instance = InstanceType<Constructor>
+> = Component<ThreeComponentProps<Klass, Instance>>;
 
 export const makeThreeComponent =
-  <TInstance extends unknown>(
-    klass: Constructor<TInstance>
-  ): ThreeComponent<TInstance> =>
+  <Klass extends Constructor, Instance = InstanceType<Klass>>(
+    klass: Klass
+  ): ThreeComponent<Klass> =>
   (props) => {
-    const [local, instanceProps] = splitProps(props, ["children"]);
+    const [local, instanceProps] = splitProps(props, [
+      "ref",
+      "args",
+      "children",
+    ]);
 
     /* Create instance */
-    const instance = new klass();
+    const instance = new klass(...(local.args || [])) as Instance;
 
     /* Assign ref */
-    typeof props.ref === "function"
-      ? props.ref(instance)
-      : (props.ref = instance);
+    typeof local.ref === "function"
+      ? local.ref(instance)
+      : (local.ref = instance);
 
     /* Connect to parent */
     const parent = useContext(ParentContext);
