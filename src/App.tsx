@@ -1,11 +1,14 @@
 import type { Component } from "solid-js";
+import * as THREE from "three";
+
+const ThreeGame: Component = () => {
+  const renderer = new THREE.WebGLRenderer();
+
+  return renderer.domElement;
+};
 
 const App: Component = () => {
-  return (
-    <div>
-      <p>hello solid world</p>
-    </div>
-  );
+  return <ThreeGame />;
 };
 
 export default App;

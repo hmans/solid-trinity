@@ -291,6 +291,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@types/three@^0.139.0":
+  version "0.139.0"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.139.0.tgz#69af1f0c52f8eea390f513e05478af1dd7f49e6f"
+  integrity sha512-4V/jZhyq7Mv05coUzxL3bz8AuBOSi/1F0RY7ujisHTV0Amy/fnYJ+s7TSJ1/hXjZukSkpuFRgV+wvWUEMbsMbQ==
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -674,6 +679,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+three@^0.139.2:
+  version "0.139.2"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.139.2.tgz#b110799a15736df673b9293e31653a4ac73648dd"
+  integrity sha512-gV7q7QY8rogu7HLFZR9cWnOQAUedUhu2WXAnpr2kdXZP9YDKsG/0ychwQvWkZN5PlNw9mv5MoCTin6zNTXoONg==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"
