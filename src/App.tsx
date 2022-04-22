@@ -31,14 +31,14 @@ const ThreeGame: Component = (props) => {
 };
 
 const Thingy = () => {
-  let mesh: THREE.Mesh | null = null;
+  let mesh: THREE.Mesh = null!;
 
   onAnimationFrame(() => {
-    mesh!.rotation.x = mesh!.rotation.y += 0.01;
+    mesh.rotation.x = mesh.rotation.y += 0.01;
   });
 
   return (
-    <T.Mesh ref={mesh} scale={2}>
+    <T.Mesh ref={mesh} scale={1}>
       <T.DodecahedronGeometry />
       <T.MeshStandardMaterial color="hotpink" />
     </T.Mesh>
