@@ -10,8 +10,7 @@ export default defineConfig({
       "@hmans/controlfreak",
       "@hmans/signal",
       "@hmans/ui"
-    ],
-    include: ["react/jsx-runtime"]
+    ]
   },
   plugins: [solidPlugin()],
   build: {
