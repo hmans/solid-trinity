@@ -1,5 +1,13 @@
 import { World } from "miniplex"
-import { Component, createSignal, For, onMount } from "solid-js"
+import {
+  batch,
+  Component,
+  createEffect,
+  createSignal,
+  For,
+  onMount,
+  Signal
+} from "solid-js"
 import T, {
   onAnimationFrame,
   ThreeComponentProps,
@@ -39,42 +47,44 @@ const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
 
 const Boids = makeInstanceComponents()
 
-const makePositions = () => {
-  const positions = new Array<IVector3>()
+const Swarm = () => {
+  const positions = new Array<Signal<IVector3>>()
 
-  for (let i = 0; i < 100; i++) {
-    positions.push({
-      x: Math.random() * 50 - 25,
-      y: Math.random() * 50 - 25,
-      z: Math.random() * 50 - 25
-    })
+  for (let i = 0; i < 1000; i++) {
+    positions.push(
+      createSignal<IVector3>(
+        {
+          x: Math.random() * 50 - 25,
+          y: Math.random() * 50 - 25,
+          z: Math.random() * 50 - 25
+        },
+        { equals: false }
+      )
+    )
   }
 
-  return positions
-}
-
-const Swarm = () => {
-  const [positions, setPositions] = createSignal<IVector3[]>(makePositions())
-
   onAnimationFrame(() => {
-    setPositions((positions) =>
-      positions.map((pos) => ({ ...pos, x: pos.x + 1 }))
-    )
+    batch(() => {
+      for (const [_, setPos] of positions) {
+        setPos((pos) => {
+          pos.x += 0.01
+          return pos
+        })
+      }
+    })
   })
 
   return (
-    <>
-      <Boids.Root>
-        <T.BoxGeometry />
-        <T.MeshStandardMaterial color="yellow" />
-      </Boids.Root>
-
-      <For each={positions()}>
-        {(pos) => {
-          return <Boids.Instance position={[pos.x, pos.y, pos.z]} />
-        }}
-      </For>
-    </>
+    <For each={positions}>
+      {([pos]) => {
+        return (
+          <T.Mesh position={[pos().x, pos().y, pos().z]}>
+            <T.MeshStandardMaterial color="green" />
+            <T.BoxGeometry />
+          </T.Mesh>
+        )
+      }}
+    </For>
   )
 }
 

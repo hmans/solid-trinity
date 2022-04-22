@@ -96,7 +96,10 @@ export const makeThreeComponent = <
       : (props.ref as Function)(instance)
 
   /* Apply props */
-  createEffect(() => applyProps(instance, instanceProps))
+  let i = 0
+  createEffect(() => {
+    applyProps(instance, instanceProps)
+  })
 
   /* Connect to parent */
   if (instance instanceof THREE.Object3D && parent instanceof THREE.Object3D) {
