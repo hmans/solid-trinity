@@ -50,7 +50,7 @@ const Boids = makeInstanceComponents()
 const Swarm = () => {
   const positions = new Array<Signal<Vector3>>()
 
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 5000; i++) {
     positions.push(
       createSignal<Vector3>(
         new Vector3(
@@ -64,27 +64,25 @@ const Swarm = () => {
   }
 
   onAnimationFrame(() => {
-    batch(() => {
-      for (const [_, setPos] of positions) {
-        setPos((pos) => {
-          pos.x += 0.01
-          return pos
-        })
-      }
-    })
+    for (const [_, setPos] of positions) {
+      setPos((pos) => {
+        pos.x += 0.01
+        return pos
+      })
+    }
   })
 
   return (
-    <For each={positions}>
-      {([pos]) => {
-        return (
-          <T.Mesh position={pos()}>
-            <T.MeshStandardMaterial color="green" />
-            <T.BoxGeometry />
-          </T.Mesh>
-        )
-      }}
-    </For>
+    <>
+      <Boids.Root>
+        <T.MeshStandardMaterial color="green" />
+        <T.BoxGeometry />
+      </Boids.Root>
+
+      <For each={positions}>
+        {([pos]) => <Boids.Instance position={pos()} />}
+      </For>
+    </>
   )
 }
 
