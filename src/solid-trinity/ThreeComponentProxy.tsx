@@ -1,6 +1,6 @@
 import { makeThreeComponent } from "./makeThreeComponent";
 
-export const defaultReactor = {
+export const defaultProxy = {
   Mesh: makeThreeComponent("Mesh"),
   MeshStandardMaterial: makeThreeComponent("MeshStandardMaterial"),
   DodecahedronGeometry: makeThreeComponent("DodecahedronGeometry"),

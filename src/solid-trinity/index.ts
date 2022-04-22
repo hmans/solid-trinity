@@ -1,3 +1,3 @@
 export * from "./makeThreeComponent";
 export * from "./onAnimationFrame";
-export { defaultReactor as default } from "./Reactor";
+export { defaultProxy as default } from "./ThreeComponentProxy";
