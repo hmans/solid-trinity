@@ -52,7 +52,7 @@ type AttachProp = {
 
 type Ref<T> = { (val: T): void } | T;
 
-type RefProp<T> = { ref?: { (val: T): void } | T };
+type RefProp<T> = { ref?: Ref<T> };
 
 /**
  * Our wrapper components allow the user to pass an already instantiated object, or it will create a new
@@ -113,7 +113,7 @@ export const makeThreeComponent =
     applyProps(instance, instanceProps);
 
     /* Automatically dispose */
-    if ("dispose" in instance) onCleanup(() => instance.dispose());
+    if ("dispose" in instance) onCleanup(() => (instance as any).dispose());
 
     return (
       <ParentContext.Provider value={instance}>
