@@ -1,9 +1,7 @@
 import {
   Component,
-  ComponentProps,
   createContext,
   onCleanup,
-  PropsWithChildren,
   splitProps,
   useContext,
 } from "solid-js";
@@ -14,10 +12,10 @@ export const ParentContext = createContext<any>();
 
 type THREE = typeof THREE;
 
-type Constructor<Instance = any> = { new (...args: any[]): Instance };
+export type Constructor<Instance = any> = { new (...args: any[]): Instance };
 
-type ThreeComponentProps<
-  Klass extends Constructor,
+export type ThreeComponentProps<
+  Klass extends Constructor<any>,
   Instance = InstanceType<Klass>
 > = MainProps<Instance> &
   RefProp<Instance> &
@@ -70,9 +68,9 @@ type ConstructorArgsProps<TConstructor extends Constructor> = {
   args?: ConstructorParameters<TConstructor>;
 };
 
-type ThreeComponent<
+export type ThreeComponent<
   Klass extends Constructor,
-  Instance = InstanceType<Constructor>
+  Instance = InstanceType<Klass>
 > = Component<ThreeComponentProps<Klass, Instance>>;
 
 export const makeThreeComponent =

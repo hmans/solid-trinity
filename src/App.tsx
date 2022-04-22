@@ -1,14 +1,15 @@
 import { Component } from "solid-js";
 import * as THREE from "three";
-import T, { onAnimationFrame, ParentContext } from "./solid-trinity";
+import T, {
+  makeThreeComponent,
+  onAnimationFrame,
+  ParentContext,
+} from "./solid-trinity";
 
 const ThreeGame: Component = (props) => {
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   const scene = new THREE.Scene();
-
-  scene.add(new THREE.AmbientLight());
-  scene.add(new THREE.DirectionalLight());
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -47,6 +48,8 @@ const Thingy = () => {
 
 const App: Component = () => (
   <ThreeGame>
+    <T.AmbientLight intensity={0.2} />
+    <T.DirectionalLight position={[10, 10, 10]} intensity={0.6} />
     <Thingy />
   </ThreeGame>
 );
