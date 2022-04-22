@@ -1,7 +1,9 @@
 import {
   Component,
+  ComponentProps,
   createContext,
   onCleanup,
+  PropsWithChildren,
   splitProps,
   useContext,
 } from "solid-js";
@@ -48,7 +50,9 @@ type AttachProp = {
   attach?: string;
 };
 
-type RefProp<T> = { ref?: T | null | ((val: T | null) => void) };
+type Ref<T> = { (val: T): void } | T;
+
+type RefProp<T> = { ref?: { (val: T): void } | T };
 
 /**
  * Our wrapper components allow the user to pass an already instantiated object, or it will create a new
@@ -60,9 +64,10 @@ type ObjectProp<T> = {
 };
 
 /** Some extra props we will be accepting on our wrapper component. */
-type ConstructorArgsProps<TConstructor> = {
+type ConstructorArgsProps<TConstructor extends Constructor> = {
   /** Arguments passed to the wrapped THREE class' constructor. */
-  args?: TConstructor extends new (...args: infer V) => any ? V : never;
+  // args?: TConstructor extends new (...args: infer V) => any ? V : never;
+  args?: ConstructorParameters<TConstructor>;
 };
 
 type ThreeComponent<
@@ -82,12 +87,13 @@ export const makeThreeComponent =
     ]);
 
     /* Create instance */
-    const instance = new klass(...(local.args || [])) as Instance;
+    const instance = new klass(...(local.args ?? [])) as Instance;
 
     /* Assign ref */
-    typeof local.ref === "function"
-      ? local.ref(instance)
-      : (local.ref = instance);
+    if ("ref" in props)
+      typeof props.ref !== "function"
+        ? (props.ref = instance)
+        : (props.ref as Function)(instance);
 
     /* Connect to parent */
     const parent = useContext(ParentContext);
