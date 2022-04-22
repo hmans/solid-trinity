@@ -96,10 +96,9 @@ export const makeThreeComponent = <
       : (props.ref as Function)(instance)
 
   /* Apply props */
-  let i = 0
-  createEffect(() => {
-    applyProps(instance, instanceProps)
-  })
+  // createEffect(() => {
+  applyProps(instance, instanceProps)
+  // })
 
   /* Connect to parent */
   if (instance instanceof THREE.Object3D && parent instanceof THREE.Object3D) {
@@ -151,21 +150,21 @@ export const applyProps = (
     if (key.indexOf("-") > -1) {
       const [property, ...rest] = key.split("-")
       applyProps(object[property], { [rest.join("-")]: value })
+    } else if (object[key]?.setScalar && typeof value === "number") {
+      object[key].setScalar(value)
+    } else if (
+      object[key]?.copy &&
+      object[key].constructor === value.constructor
+    ) {
+      object[key].copy(value)
+    } else if (object[key]?.set) {
+      createEffect(() => {
+        Array.isArray(props[key])
+          ? object[key].set(...props[key])
+          : object[key].set(props[key])
+      })
     } else if (key in object) {
-      if (object[key]?.setScalar && typeof value === "number") {
-        object[key].setScalar(value)
-      } else if (
-        object[key]?.copy &&
-        object[key].constructor === value.constructor
-      ) {
-        object[key].copy(value)
-      } else if (object[key]?.set) {
-        Array.isArray(value)
-          ? object[key].set(...value)
-          : object[key].set(value)
-      } else {
-        object[key] = value
-      }
+      object[key] = value
     }
   }
 }
