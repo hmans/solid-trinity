@@ -24,16 +24,20 @@ const ParentContext = createContext<any>();
 
 type THREE = typeof THREE;
 
-type Constructor<T = any> = { new (...args: any[]): T };
+type ConstructibleTHREE = {
+  [K in keyof THREE]: THREE[K] extends Constructor ? THREE[K] : never;
+};
 
-type ThreeComponentProps<T> = any;
+type Constructor<Instance = any> = { new (...args: any[]): Instance };
 
-type ThreeComponent<T> = Component<ThreeComponentProps<T>>;
+type ThreeComponentProps<Instance> = any;
+
+type ThreeComponent<Instance> = Component<ThreeComponentProps<Instance>>;
 
 const makeThreeComponent =
-  <TName extends keyof THREE, T extends THREE[TName]>(
+  <TName extends keyof ConstructibleTHREE, Klass = ConstructibleTHREE[TName]>(
     name: TName
-  ): ThreeComponent<T> =>
+  ): ThreeComponent<Klass> =>
   (props) => {
     const [local, instanceProps] = splitProps(props, ["children"]);
 
@@ -75,9 +79,11 @@ const makeThreeComponent =
     );
   };
 
-const Mesh = makeThreeComponent("Mesh");
-const MeshStandardMaterial = makeThreeComponent("MeshStandardMaterial");
-const DodecahedronGeometry = makeThreeComponent("DodecahedronGeometry");
+const T = {
+  Mesh: makeThreeComponent("Mesh"),
+  MeshStandardMaterial: makeThreeComponent("MeshStandardMaterial"),
+  DodecahedronGeometry: makeThreeComponent("DodecahedronGeometry"),
+};
 
 const ThreeGame: Component = (props) => {
   const renderer = new THREE.WebGLRenderer();
@@ -116,10 +122,10 @@ const App: Component = () => {
 
   return (
     <ThreeGame>
-      <Mesh ref={mesh}>
-        <DodecahedronGeometry />
-        <MeshStandardMaterial color="hotpink" />
-      </Mesh>
+      <T.Mesh ref={mesh} scale={2}>
+        <T.DodecahedronGeometry />
+        <T.MeshStandardMaterial color="hotpink" />
+      </T.Mesh>
     </ThreeGame>
   );
 };
