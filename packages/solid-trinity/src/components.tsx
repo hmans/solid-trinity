@@ -87,7 +87,6 @@ export const makeThreeComponent = <
   const parent = useContext(ParentContext)
 
   /* Create instance */
-  console.log(local.args)
   const instance = new klass(...(local.args ?? [])) as Instance
 
   /* Assign ref */
