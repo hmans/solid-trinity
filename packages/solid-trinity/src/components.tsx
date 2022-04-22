@@ -10,8 +10,6 @@ import * as THREE from "three"
 
 export const ParentContext = createContext<any>()
 
-type THREE = typeof THREE
-
 export type Constructor<Instance = any> = { new (...args: any[]): Instance }
 
 type MainProps<T> = Omit<ConvenienceProps<T>, "children" | "attach" | "args">
