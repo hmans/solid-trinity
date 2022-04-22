@@ -4,12 +4,11 @@ import solidPlugin from "vite-plugin-solid"
 export default defineConfig({
   optimizeDeps: {
     exclude: [
-      // "miniplex",
-      // "miniplex-react",
-      "solid-trinity"
-      // "@hmans/controlfreak",
-      // "@hmans/signal",
-      // "@hmans/ui"
+      "miniplex",
+      "solid-trinity",
+      "@hmans/controlfreak",
+      "@hmans/signal",
+      "@hmans/ui"
     ]
   },
   plugins: [solidPlugin()],

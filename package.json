@@ -1,6 +1,6 @@
 {
-  "name": "solid-trinity",
-  "version": "1.0.0",
+  "name": "solid-trinity-monorepo",
+  "version": "0.0.3",
   "private": true,
   "main": "index.js",
   "author": "Hendrik Mans <hendrik@mans.de>",

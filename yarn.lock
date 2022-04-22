@@ -1148,6 +1148,11 @@
     human-id "^1.0.2"
     prettier "^1.19.1"
 
+"@hmans/signal@^0.1.7":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@hmans/signal/-/signal-0.1.8.tgz#46788033db3a24206ff91962aa44097dd274390b"
+  integrity sha512-jhTe89A0Fzp0aRcQdB1F9Z1gDqFNFS5kZohbk/EiQqvcVJqfJ5XG0IsSEZiyAT7RuiLXupwbAn7MxXVL+iZZIA==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -4475,6 +4480,13 @@ minimist@^1.2.0:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
   integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
+miniplex@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/miniplex/-/miniplex-0.9.1.tgz#73a1d21fb63f765adc6f107768315e58eeaaf6ad"
+  integrity sha512-ivHUvcVdnTSJbVWmbi2plyH4GZM7ezSxEJfVwS5NAMmU8uk8XnTJ9LkDe9WSe8t52BJ1jHHe5P8q/6YDmtDNLg==
+  dependencies:
+    "@hmans/signal" "^0.1.7"
+
 mixin-deep@^1.2.0:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.2.tgz#1120b43dc359a785dce65b55b82e257ccf479566"
@@ -5291,7 +5303,7 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-solid-js@*, solid-js@^1.3.13, solid-js@^1.3.3:
+solid-js@^1.3.13, solid-js@^1.3.3:
   version "1.3.16"
   resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.3.16.tgz#b4c410a4de73464a0fd5d97ca5d17a5f92a9c1e7"
   integrity sha512-ks9wrUFLx2vzXnR+yXLtL/qO++lixueYsPb9baN0jMNpe1nzAdZn8AbodCmDu9yLPrA7oEFt5CYnzN6/MwtswA==
@@ -5304,11 +5316,6 @@ solid-refresh@^0.4.0:
     "@babel/generator" "^7.16.0"
     "@babel/helper-module-imports" "^7.16.0"
     "@babel/types" "^7.16.0"
-
-solid-trinity@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/solid-trinity/-/solid-trinity-0.0.2.tgz#c31cac52e4bb5893af8c84fe0efecdd62df42f81"
-  integrity sha512-mN1tfapdkmo5Hz/2s71RkWRGL+SUROC15DnmEGNfEdC5mTAlaXE9H6bki4VxCy8eNNP5mUsvhYl7s9E30y2sKA==
 
 source-map-js@^1.0.2:
   version "1.0.2"
@@ -5562,7 +5569,7 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-three@*, three@^0.139.2:
+three@^0.139.2:
   version "0.139.2"
   resolved "https://registry.yarnpkg.com/three/-/three-0.139.2.tgz#b110799a15736df673b9293e31653a4ac73648dd"
   integrity sha512-gV7q7QY8rogu7HLFZR9cWnOQAUedUhu2WXAnpr2kdXZP9YDKsG/0ychwQvWkZN5PlNw9mv5MoCTin6zNTXoONg==
