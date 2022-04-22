@@ -1,11 +1,24 @@
-import { Component, createSignal, onMount } from "solid-js"
+import { World } from "miniplex"
+import { Component, createSignal, For, onMount } from "solid-js"
 import T, {
   onAnimationFrame,
   ThreeComponentProps,
   Trinity
 } from "solid-trinity"
-import { Mesh } from "three"
+import { Mesh, Vector3 } from "three"
 import { makeInstanceComponents } from "./instancing"
+
+type Entity = {
+  position: Vector3
+}
+
+interface IVector3 {
+  x: number
+  y: number
+  z: number
+}
+
+const world = new World()
 
 const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
   color?: string
@@ -26,7 +39,29 @@ const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
 
 const Boids = makeInstanceComponents()
 
+const makePositions = () => {
+  const positions = new Array<IVector3>()
+
+  for (let i = 0; i < 100; i++) {
+    positions.push({
+      x: Math.random() * 50 - 25,
+      y: Math.random() * 50 - 25,
+      z: Math.random() * 50 - 25
+    })
+  }
+
+  return positions
+}
+
 const Swarm = () => {
+  const [positions, setPositions] = createSignal<IVector3[]>(makePositions())
+
+  onAnimationFrame(() => {
+    setPositions((positions) =>
+      positions.map((pos) => ({ ...pos, x: pos.x + 1 }))
+    )
+  })
+
   return (
     <>
       <Boids.Root>
@@ -34,7 +69,11 @@ const Swarm = () => {
         <T.MeshStandardMaterial color="yellow" />
       </Boids.Root>
 
-      <Boids.Instance />
+      <For each={positions()}>
+        {(pos) => {
+          return <Boids.Instance position={[pos.x, pos.y, pos.z]} />
+        }}
+      </For>
     </>
   )
 }
