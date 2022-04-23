@@ -3,12 +3,11 @@ import {
   createContext,
   createEffect,
   onCleanup,
+  PropsWithChildren,
   splitProps,
   useContext
 } from "solid-js"
 import * as THREE from "three"
-
-export const ParentContext = createContext<any>()
 
 export type Constructor<Instance = any> = { new (...args: any[]): Instance }
 
@@ -69,7 +68,13 @@ export type ThreeComponentProps<
 export type ThreeComponent<
   Klass extends Constructor,
   Instance = InstanceType<Klass>
+  // > = (props: PropsWithChildren<ThreeComponentProps<Klass, Instance>>) => Instance
 > = Component<ThreeComponentProps<Klass, Instance>>
+
+export const parentStack = new Array<any>()
+
+export const getCurrentParent = () =>
+  parentStack.length > 0 ? parentStack[parentStack.length - 1] : null
 
 export const makeThreeComponent = <
   Klass extends Constructor,
@@ -84,7 +89,7 @@ export const makeThreeComponent = <
     "children"
   ])
 
-  const parent = useContext(ParentContext)
+  const parent = getCurrentParent()
 
   /* Create instance */
   const instance = new klass(...(local.args ?? [])) as Instance
@@ -96,9 +101,7 @@ export const makeThreeComponent = <
       : (props.ref as Function)(instance)
 
   /* Apply props */
-  // createEffect(() => {
   applyProps(instance, instanceProps)
-  // })
 
   /* Connect to parent */
   if (instance instanceof THREE.Object3D && parent instanceof THREE.Object3D) {
@@ -126,14 +129,15 @@ export const makeThreeComponent = <
     }
   }
 
+  /* Render children */
+  parentStack.push(instance)
+  local.children
+  parentStack.pop()
+
   /* Automatically dispose */
   if ("dispose" in instance) onCleanup(() => (instance as any).dispose())
 
-  return (
-    <ParentContext.Provider value={instance}>
-      {local.children}
-    </ParentContext.Provider>
-  )
+  return <>{instance}</>
 }
 
 /**

@@ -1,13 +1,4 @@
-import { World } from "miniplex"
-import {
-  batch,
-  Component,
-  createEffect,
-  createSignal,
-  For,
-  onMount,
-  Signal
-} from "solid-js"
+import { batch, Component, createSignal, For, Signal } from "solid-js"
 import T, {
   onAnimationFrame,
   ThreeComponentProps,
@@ -15,18 +6,6 @@ import T, {
 } from "solid-trinity"
 import { Mesh, Vector3 } from "three"
 import { makeInstanceComponents } from "./instancing"
-
-type Entity = {
-  position: Vector3
-}
-
-interface IVector3 {
-  x: number
-  y: number
-  z: number
-}
-
-const world = new World()
 
 const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
   color?: string
@@ -108,8 +87,8 @@ const App: Component = () => (
     <T.AmbientLight intensity={0.2} />
     <T.DirectionalLight position={[10, 10, 10]} intensity={0.6} />
 
-    {/* <Swarm />
-    <RotatingCube /> */}
+    <Swarm />
+    <RotatingCube />
 
     <Thingy position-x={-5} color="red" />
     <Thingy position-x={+5} />
