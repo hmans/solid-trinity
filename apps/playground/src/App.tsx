@@ -34,11 +34,11 @@ const Thingy: Component<ThreeComponentProps<typeof Mesh> & {
   const [rot, setRot] = createSignal(0)
 
   onAnimationFrame(() => {
-    setRot((rot) => (rot += 0.01))
+    setRot((rot) => rot + 0.01)
   })
 
   return (
-    <T.Mesh {...props} rotation-z={rot()} scale={1}>
+    <T.Mesh {...props} rotation={[rot(), rot(), 0]} scale={1}>
       <T.DodecahedronGeometry />
       <T.MeshStandardMaterial color={props.color ?? "hotpink"} />
     </T.Mesh>
@@ -108,8 +108,8 @@ const App: Component = () => (
     <T.AmbientLight intensity={0.2} />
     <T.DirectionalLight position={[10, 10, 10]} intensity={0.6} />
 
-    <Swarm />
-    <RotatingCube />
+    {/* <Swarm />
+    <RotatingCube /> */}
 
     <Thingy position-x={-5} color="red" />
     <Thingy position-x={+5} />
