@@ -1,13 +1,6 @@
-import {
-  Component,
-  createContext,
-  createEffect,
-  onCleanup,
-  PropsWithChildren,
-  splitProps,
-  useContext
-} from "solid-js"
+import { Component, createEffect, onCleanup, splitProps } from "solid-js"
 import * as THREE from "three"
+import { getCurrentParent, popParent, pushParent } from "./parenting"
 
 export type Constructor<Instance = any> = { new (...args: any[]): Instance }
 
@@ -71,11 +64,6 @@ export type ThreeComponent<
   // > = (props: PropsWithChildren<ThreeComponentProps<Klass, Instance>>) => Instance
 > = Component<ThreeComponentProps<Klass, Instance>>
 
-export const parentStack = new Array<any>()
-
-export const getCurrentParent = () =>
-  parentStack.length > 0 ? parentStack[parentStack.length - 1] : null
-
 export const makeThreeComponent = <
   Klass extends Constructor,
   Instance = InstanceType<Klass>
@@ -130,9 +118,9 @@ export const makeThreeComponent = <
   }
 
   /* Render children */
-  parentStack.push(instance)
+  pushParent(instance)
   local.children
-  parentStack.pop()
+  popParent()
 
   /* Automatically dispose */
   if ("dispose" in instance) onCleanup(() => (instance as any).dispose())

@@ -1,5 +1,6 @@
 export * from "./components"
 export * from "./engine"
 export * from "./hooks"
+export * from "./parenting"
 export * from "./proxy"
 export { defaultProxy as default } from "./proxy"

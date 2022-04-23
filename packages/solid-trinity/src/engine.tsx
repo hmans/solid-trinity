@@ -1,18 +1,19 @@
 import { Component } from "solid-js"
 import * as THREE from "three"
-import { parentStack } from "./components"
 import { onAnimationFrame } from "./hooks"
+import { popParent, pushParent } from "./parenting"
 
 export const Trinity: Component = (props) => {
   const renderer = new THREE.WebGLRenderer()
   renderer.setSize(window.innerWidth, window.innerHeight)
 
-  /* Cool! */
+  /* Make a scene */
   const scene = new THREE.Scene()
-  parentStack.push(scene)
+  pushParent(scene)
   props.children
-  parentStack.pop()
+  popParent()
 
+  /* Make a default camera */
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight
