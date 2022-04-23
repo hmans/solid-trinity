@@ -148,18 +148,36 @@ export const applyProps = (
     if (key.indexOf("-") > -1) {
       const [property, ...rest] = key.split("-")
       applyProps(object[property], { [rest.join("-")]: props[key] })
-    } else if (object[key]?.setScalar && typeof props[key] === "number") {
+      continue
+    }
+
+    /* If the property exposes a `setScalar` function, we'll use that */
+    if (object[key]?.setScalar && typeof props[key] === "number") {
       createEffect(() => object[key].setScalar(props[key]))
-    } else if (
+      continue
+    }
+
+    /* If the property exposes a `copy` function and the value is of the same type,
+       we'll use that. (Vectors, Eulers, Quaternions, ...) */
+    if (
       object[key]?.copy &&
       object[key].constructor === props[key].constructor
     ) {
       createEffect(() => object[key].copy(props[key]))
-    } else if (object[key]?.set) {
+      continue
+    }
+
+    /* If the property exposes a `set` function, we'll use that. */
+    if (object[key]?.set) {
       Array.isArray(props[key])
         ? createEffect(() => object[key].set(...props[key]))
         : createEffect(() => object[key].set(props[key]))
-    } else if (key in object) {
+      continue
+    }
+
+    /* If we got here, we couldn't do anything special, so let's just check if the
+       target property exists and assign it directly. */
+    if (key in object) {
       createEffect(() => (object[key] = props[key]))
     }
   }
