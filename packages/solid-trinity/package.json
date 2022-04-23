@@ -1,7 +1,7 @@
 {
   "name": "solid-trinity",
   "private": false,
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Trinity, SolidJS-flavored.",
   "main": "dist/solid-trinity.cjs.js",
   "module": "dist/solid-trinity.esm.js",
