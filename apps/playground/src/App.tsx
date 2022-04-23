@@ -29,12 +29,14 @@ const Boids = makeInstanceComponents()
 const RotatingCube = () => {
   const [rotation, setRotation] = createSignal(0)
 
+  let mesh!: Mesh
+
   onAnimationFrame(() => {
     setRotation((rotation) => rotation + 0.01)
   })
 
   return (
-    <T.Mesh rotation={[rotation(), rotation(), 0]}>
+    <T.Mesh rotation={[rotation(), rotation(), 0]} ref={mesh}>
       <T.BoxGeometry />
       <T.MeshStandardMaterial color="hotpink" />
     </T.Mesh>

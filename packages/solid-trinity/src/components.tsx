@@ -29,7 +29,7 @@ type AttachProp = {
   attach?: string
 }
 
-type Ref<T> = (value: T) => void
+type Ref<T> = T | ((value: T) => void)
 
 type RefProp<T> = { ref?: Ref<T> }
 
@@ -83,7 +83,7 @@ export const makeThreeComponent = <
   const instance = new klass(...(local.args ?? [])) as Instance
 
   /* Assign ref */
-  props.ref?.(instance)
+  if (props.ref instanceof Function) props.ref(instance)
 
   /* Apply props */
   applyProps(instance, instanceProps)
