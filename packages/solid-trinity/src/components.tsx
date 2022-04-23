@@ -116,13 +116,13 @@ export const makeThreeComponent = <
 
   /* Render children */
   pushParent(instance)
-  local.children
+  const children = local.children
   popParent()
 
   /* Automatically dispose */
   if ("dispose" in instance) onCleanup(() => (instance as any).dispose())
 
-  return <>{instance}</>
+  return children
 }
 
 /**

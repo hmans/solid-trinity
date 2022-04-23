@@ -9,9 +9,6 @@ export const Trinity: Component = (props) => {
 
   /* Make a scene */
   const scene = new THREE.Scene()
-  pushParent(scene)
-  props.children
-  popParent()
 
   /* Make a default camera */
   const camera = new THREE.PerspectiveCamera(
@@ -24,5 +21,9 @@ export const Trinity: Component = (props) => {
     renderer.render(scene, camera)
   })
 
-  return renderer.domElement
+  pushParent(scene)
+  const children = props.children
+  popParent()
+
+  return [renderer.domElement, children]
 }
